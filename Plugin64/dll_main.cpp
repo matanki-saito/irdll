@@ -25,6 +25,9 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 		// INIから取得
 		Ini::GetOptionsFromIni(&options);
 
+		// 日付
+		e |= Date::Init(options);
+
 		Validator::Validate(e,options);
 	}else if (ulReasonForCall == DLL_PROCESS_DETACH){
 		BytePattern::ShutdownLog();

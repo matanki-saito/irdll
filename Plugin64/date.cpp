@@ -3,30 +3,29 @@
 
 namespace Date {
 	extern "C" {
-		void dateProc2();
-		uintptr_t dateProc2ReturnAddress;
+		void dateProc1();
+		uintptr_t dateProc1ReturnAddress;
+		uintptr_t dateProc1CallAddress;
 	}
-
-	typedef struct _DateFormat {
-		char text[11];
-	} DateFormat;
 
 	DllError dateProc1Injector(RunOptions options) {
 		DllError e = {};
 
-		// ex) 1444年11月11日
-		DateFormat isoFormat = {
-			{'y',' ',0x0F,' ','m','w',' ','d',' ',0x0E,0}
-		};
-
 		switch (options.version) {
 		case v1_3_2_0:
-			// d w mw w y
-			BytePattern::temp_instance().find_pattern("64 20 77 20 6D");
-			if (BytePattern::temp_instance().has_size(1, "右上の表記を変更")) {
-				uintptr_t address = BytePattern::temp_instance().get_first().address();
+			// lea     ebx, [rax+1]
+			BytePattern::temp_instance().find_pattern("8D 58 01 41 8B D6 48 8D 4D 08");
+			if (BytePattern::temp_instance().has_size(1, "日付表記を変更")) {
+				// mov     [rsp+168h+var_108], 0Fh
+				uintptr_t address = BytePattern::temp_instance().get_first().address(0x10);
 
-				Injector::WriteMemory<DateFormat>(address, isoFormat,true);
+				// mov     edx, ebx
+				dateProc1ReturnAddress = address + 0x56;
+
+				Injector::MakeJMP(address, dateProc1, true);
+
+				// call {xxxxx}
+				dateProc1CallAddress = Injector::GetBranchDestination(address + 0x25).as_int();
 			}
 			else {
 				e.unmatch.dateProc1Injector = true;
