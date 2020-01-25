@@ -2,6 +2,7 @@ EXTERN	dateProc1ReturnAddress	:	QWORD
 EXTERN	dateProc1CallAddress1	:	QWORD
 EXTERN	dateProc1CallAddress2	:	QWORD
 EXTERN	dateProc1CallAddress3	:	QWORD
+EXTERN  dateProc1Separator1		:	QWORD
 
 ESCAPE_SEQ_1	=	10h
 ESCAPE_SEQ_2	=	11h
@@ -16,8 +17,7 @@ NO_FONT			=	98Fh
 NOT_DEF			=	2026h
 
 .DATA
-	dateProc1Separator1		DD	" "
-	dateProc1Separator2		DD	" "
+	dateProc1Separator2		DD	0
 
 .CODE
 dateProc1 PROC
@@ -25,8 +25,8 @@ dateProc1 PROC
 	mov     qword ptr [rsp + 168h -108h], 0Fh
 	mov		qword ptr [rsp + 168h -110h], r15;
 	mov		byte ptr [rsp + 168h - 120h], 0;
-	mov		r8d, 1;
-	lea     rdx, dateProc1Separator1;
+	mov		r8d, 3;
+	mov     rdx, dateProc1Separator1; 年
 	lea		rcx, [rsp + 168h - 120h];
 	call	dateProc1CallAddress1;
 	nop;
@@ -35,42 +35,42 @@ dateProc1 PROC
 	mov		qword ptr [rsp + 168h -128h], 0Fh;
 	mov     qword ptr [rsp + 168h -130h], r15;
 	mov		byte ptr [rsp + 168h -140h], 0;
-	mov		r8d, 1;
-	lea     rdx, dateProc1Separator2;
+	mov		r8d, 0;
+	mov     rdx, dateProc1Separator2; // 日
 	lea		rcx, [rsp + 168h -140h];
 	call	dateProc1CallAddress1;
 	nop;
 
-	; toString
+	; アドレスではなくて日付の数値をそのまま渡している
 	mov     edx, ebx;
 	lea		rcx, [rsp + 168h - 100h];
 	call	dateProc1CallAddress2;
 	nop;
 
 	; セパレータ２をくっつける
-	lea		r8, [rsp + 168h - 140h];
-	lea		rdx, [rsp + 168h - 100h];
+	lea		rdx, [rsp + 168h - 140h];
+	lea		r8, [rsp + 168h - 100h];
 	lea		rcx, [rbp-18h];
 	call	dateProc1CallAddress3;
 	nop;
 
 	; 月をくっつける
-	lea     r8, [rbp+28h];
-	mov		rdx, rax;
+	lea     rdx, [rbp+28h];
+	mov		r8, rax;
 	lea		rcx, [rbp-38h];
 	call	dateProc1CallAddress3;
 	nop;
 
 	; セパレータ１をくっつける
-	lea     r8, [rsp + 168h -120h];
-	mov     rdx, rax;
+	lea     rdx, [rsp + 168h -120h];
+	mov     r8, rax;
 	lea		rcx, [rbp-58h];
 	call	dateProc1CallAddress3;
 	nop;
 
-	; 日をくっつける
-	lea		r8, [rbp+8];
-	mov     rdx, rax;
+	; 年をくっつける
+	lea		rdx, [rbp+8];
+	mov     r8, rax;
 	lea		rcx, [rbp-78h];
 	call	dateProc1CallAddress3;
 	nop;

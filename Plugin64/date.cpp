@@ -8,7 +8,12 @@ namespace Date {
 		uintptr_t dateProc1CallAddress1;
 		uintptr_t dateProc1CallAddress2;
 		uintptr_t dateProc1CallAddress3;
+		uintptr_t dateProc1Separator1;
+		uintptr_t dateProc1Separator2;
 	}
+
+	char* dateProc1Separator1Year = u8"年";
+	char* dateProc1Separator1Day = u8"日";
 
 	DllError dateProc1Injector(RunOptions options) {
 		DllError e = {};
@@ -18,6 +23,9 @@ namespace Date {
 			// lea     ebx, [rax+1]
 			BytePattern::temp_instance().find_pattern("8D 58 01 41 8B D6 48 8D 4D 08");
 			if (BytePattern::temp_instance().has_size(1, "日付表記を変更")) {
+				dateProc1Separator1 = (uintptr_t) dateProc1Separator1Year;
+				dateProc1Separator2 = (uintptr_t)dateProc1Separator1Day;
+	
 				// mov     [rsp+168h+var_108], 0Fh
 				uintptr_t address = BytePattern::temp_instance().get_first().address(0x10);
 
