@@ -3,6 +3,7 @@ EXTERN	dateProc1CallAddress1	:	QWORD
 EXTERN	dateProc1CallAddress2	:	QWORD
 EXTERN	dateProc1CallAddress3	:	QWORD
 EXTERN  dateProc1Separator1		:	QWORD
+EXTERN  dateProc1Separator2		:	QWORD
 
 ESCAPE_SEQ_1	=	10h
 ESCAPE_SEQ_2	=	11h
@@ -16,8 +17,6 @@ SHIFT_4			=	8F2h
 NO_FONT			=	98Fh
 NOT_DEF			=	2026h
 
-.DATA
-	dateProc1Separator2		DD	0
 
 .CODE
 dateProc1 PROC
@@ -35,8 +34,8 @@ dateProc1 PROC
 	mov		qword ptr [rsp + 168h -128h], 0Fh;
 	mov     qword ptr [rsp + 168h -130h], r15;
 	mov		byte ptr [rsp + 168h -140h], 0;
-	mov		r8d, 0;
-	mov     rdx, dateProc1Separator2; // 日
+	mov		r8d, 3;
+	mov     rdx, dateProc1Separator2;
 	lea		rcx, [rsp + 168h -140h];
 	call	dateProc1CallAddress1;
 	nop;
@@ -48,8 +47,8 @@ dateProc1 PROC
 	nop;
 
 	; セパレータ２をくっつける
-	lea		rdx, [rsp + 168h - 140h];
-	lea		r8, [rsp + 168h - 100h];
+	lea		r8, [rsp + 168h - 140h];
+	lea		rdx, [rsp + 168h - 100h];
 	lea		rcx, [rbp-18h];
 	call	dateProc1CallAddress3;
 	nop;
