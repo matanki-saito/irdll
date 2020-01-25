@@ -104,7 +104,7 @@ bool validateProcess() {
 
 	_wsplitpath_s(pluginpath, szDrive, szDir, szFileName, szExt);
 
-	if (wcscmp(szFileName, L"eu4") == 0 && wcscmp(szExt, L".exe") == 0) {
+	if (wcscmp(szFileName, L"imperator") == 0 && wcscmp(szExt, L".exe") == 0) {
 		return true;
 	}
 	else {
