@@ -10,6 +10,11 @@ namespace Date {
 		uintptr_t dateProc1CallAddress3;
 		uintptr_t dateProc1Separator1;
 		uintptr_t dateProc1Separator2;
+
+		void dateProc2();
+		uintptr_t dateProc2ReturnAddress;
+		uintptr_t dateProc2CallAddress1;
+		uintptr_t dateProc2CallAddress2;
 	}
 
 	const char* dateProc1Separator1Year = u8"年";
@@ -54,10 +59,64 @@ namespace Date {
 		return e;
 	}
 
+	DllError dateProc2Injector(RunOptions options) {
+		DllError e = {};
+
+		switch (options.version) {
+		case v1_3_2_0:
+			// lea     rdx, [rsp+128h+var_E0]
+			BytePattern::temp_instance().find_pattern("48 8D 54 24 48 48 8B CE E8 ? ? ? ? 90 49 83 C9 FF");
+			if (BytePattern::temp_instance().has_size(2, "西暦日付表記を変更")) {
+
+				uintptr_t address = BytePattern::temp_instance().get_first().address();
+
+				// call {xxxxx}
+				dateProc2CallAddress2 = Injector::GetBranchDestination(address + 8).as_int();
+
+				// 短絡する jmp xx
+				Injector::WriteMemory(address, 0xEB,true);
+				Injector::WriteMemory(address+1, 0x1F,true);
+			}
+			else {
+				e.unmatch.dateProc2Injector = true;
+			}
+			break;
+		default:
+			e.version.dateProc2Injector = true;
+		}
+
+		switch (options.version) {
+		case v1_3_2_0:
+			// lea     ebx, [rax+1]
+			BytePattern::temp_instance().find_pattern("8D 58 01 48 C7 45 A0 0F 00 00 00");
+			if (BytePattern::temp_instance().has_size(1, "西暦日付表記を変更")) {
+
+				uintptr_t address = BytePattern::temp_instance().get_first().address();
+
+				// call {xxxxx} / append
+				dateProc2CallAddress1 = Injector::GetBranchDestination(address + 0xA6).as_int();
+
+				// mov     r8, [rbp-40h]
+				dateProc2ReturnAddress = address + 0xAC;
+
+				Injector::MakeJMP(address, dateProc2, true);
+			}
+			else {
+				e.unmatch.dateProc2Injector = true;
+			}
+			break;
+		default:
+			e.version.dateProc2Injector = true;
+		}
+
+		return e;
+	}
+
 	DllError Init(RunOptions options) {
 		DllError result = {};
 
 		result |= dateProc1Injector(options);
+		result |= dateProc2Injector(options);
 
 		return result;
 	}

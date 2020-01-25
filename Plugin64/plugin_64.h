@@ -22,7 +22,7 @@ struct DllError{
 		DllErrorCode code1;
 		struct {
 			bool dateProc1Injector : 1;
-
+			bool dateProc2Injector : 1;
 		};
 	} version;
 
@@ -30,6 +30,7 @@ struct DllError{
 		DllErrorCode code2;
 		struct {
 			bool dateProc1Injector : 1;
+			bool dateProc2Injector : 1;
 		};
 	} unmatch;
 
