@@ -12,8 +12,8 @@ namespace Date {
 		uintptr_t dateProc1Separator2;
 	}
 
-	char* dateProc1Separator1Year = u8"”N";
-	char* dateProc1Separator1Day = u8"“ú";
+	const char* dateProc1Separator1Year = u8"”N";
+	const char* dateProc1Separator1Day = u8"“ú";
 
 	DllError dateProc1Injector(RunOptions options) {
 		DllError e = {};
