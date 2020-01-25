@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "plugin_64.h"
 
 namespace Date {
@@ -12,8 +12,8 @@ namespace Date {
 		uintptr_t dateProc1Separator2;
 	}
 
-	const char* dateProc1Separator1Year = u8"”N";
-	const char* dateProc1Separator1Day = u8"“ú";
+	const char* dateProc1Separator1Year = u8"å¹´";
+	const char* dateProc1Separator1Day = u8"æ—¥";
 
 	DllError dateProc1Injector(RunOptions options) {
 		DllError e = {};
@@ -22,7 +22,7 @@ namespace Date {
 		case v1_3_2_0:
 			// lea     ebx, [rax+1]
 			BytePattern::temp_instance().find_pattern("8D 58 01 41 8B D6 48 8D 4D 08");
-			if (BytePattern::temp_instance().has_size(1, "“ú•t•\‹L‚ğ•ÏX")) {
+			if (BytePattern::temp_instance().has_size(1, "æ—¥ä»˜è¡¨è¨˜ã‚’å¤‰æ›´")) {
 				dateProc1Separator1 = (uintptr_t) dateProc1Separator1Year;
 				dateProc1Separator2 = (uintptr_t)dateProc1Separator1Day;
 	
