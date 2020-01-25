@@ -5,7 +5,9 @@ namespace Date {
 	extern "C" {
 		void dateProc1();
 		uintptr_t dateProc1ReturnAddress;
-		uintptr_t dateProc1CallAddress;
+		uintptr_t dateProc1CallAddress1;
+		uintptr_t dateProc1CallAddress2;
+		uintptr_t dateProc1CallAddress3;
 	}
 
 	DllError dateProc1Injector(RunOptions options) {
@@ -19,13 +21,19 @@ namespace Date {
 				// mov     [rsp+168h+var_108], 0Fh
 				uintptr_t address = BytePattern::temp_instance().get_first().address(0x10);
 
-				// mov     edx, ebx
-				dateProc1ReturnAddress = address + 0x56;
+				// or      r9, 0FFFFFFFFFFFFFFFFh
+				dateProc1ReturnAddress = address + 0xAB;
 
 				Injector::MakeJMP(address, dateProc1, true);
 
-				// call {xxxxx}
-				dateProc1CallAddress = Injector::GetBranchDestination(address + 0x25).as_int();
+				// call {xxxxx} / assign
+				dateProc1CallAddress1 = Injector::GetBranchDestination(address + 0x25).as_int();
+
+				// call {xxxxx} / to_string
+				dateProc1CallAddress2 = Injector::GetBranchDestination(address + 0x5D).as_int();
+
+				// call {xxxxx} / operator+
+				dateProc1CallAddress3 = Injector::GetBranchDestination(address + 0x71).as_int();
 			}
 			else {
 				e.unmatch.dateProc1Injector = true;
