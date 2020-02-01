@@ -1,6 +1,10 @@
 # IRDLL
 
-This dll makes it possible to display double-byte characters on Europa Universalis IV.
+## Date format fix
+
+![befour](image/before.png)
+
+![after](image/after.png)
 
 ## Licence
 
