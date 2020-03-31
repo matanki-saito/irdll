@@ -37,7 +37,7 @@ jobs:
     - name: Move files to artifact package
       run: |
         Move-Item README.md artifact/
-        Move-Item .dist.v1.json artifact/
+        Move-Item resource/.dist.v1.json artifact/
         Move-Item x64/Release/version.dll artifact/
         Move-Item resource/plugin.ini artifact/plugins/
         Move-Item resource/dllautoupdater.exe artifact/plugins/
