@@ -1,0 +1,30 @@
+name: DllBuild
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Get source
+      uses: actions/checkout@v2
+
+    - name: Setup Nuget.exe
+      uses: warrenbuckley/Setup-Nuget@v1
+      with:
+        nuget-version: '4.4.1'
+
+    - name: Restore nuget db
+      run: nuget restore **\*.sln
+
+    - name: Setup MSBuild.exe
+      uses: warrenbuckley/Setup-MSBuild@v1
+
+    - name: Build source
+      run: msbuild **\*.sln -p:Configuration=release|x64
+      shell: cmd
+
