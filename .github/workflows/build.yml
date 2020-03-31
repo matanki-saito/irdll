@@ -25,6 +25,6 @@ jobs:
       uses: warrenbuckley/Setup-MSBuild@v1
 
     - name: Build source
-      run: msbuild **\*.sln -p:Configuration=release|x64
+      run: msbuild IRJPS.sln -p:Configuration=release -p:platform=x64
       shell: cmd
 
