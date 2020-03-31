@@ -13,7 +13,7 @@ namespace Validator {
 			case MAKELANGID(LANG_JAPANESE, SUBLANG_JAPANESE_JAPAN):
 				caption = L"エラー";
 				message = L""
-					L"未対応です";
+					L"日付変更dllはこのバージョンに未対応です。修正をお待ちください";
 				break;
 
 			case MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US):

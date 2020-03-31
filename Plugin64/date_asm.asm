@@ -83,6 +83,67 @@ dateProc1 ENDP
 
 ;----------------------------------------------;
 
+dateProc1V1400 PROC
+	; セパレータ１作成
+	mov     qword ptr [rsp + 168h -108h], 0Fh
+	mov		qword ptr [rsp + 168h -110h], r15;
+	mov		byte ptr [rsp + 168h - 120h], 0;
+	mov		r8d, 3;
+	mov     rdx, dateProc1Separator1; 年
+	lea		rcx, [rsp + 168h - 120h];
+	call	dateProc1CallAddress1;
+	nop;
+
+	; セパレータ２作成
+	mov		qword ptr [rsp + 168h -128h], 0Fh;
+	mov     qword ptr [rsp + 168h -130h], r15;
+	mov		byte ptr [rsp + 168h -140h], 0;
+	mov		r8d, 3;
+	mov     rdx, dateProc1Separator2;
+	lea		rcx, [rsp + 168h -140h];
+	call	dateProc1CallAddress1;
+	nop;
+
+	; アドレスではなくて日付の数値をそのまま渡している
+	mov     edx, ebx;
+	lea		rcx, [rsp + 168h - 100h];
+	call	dateProc1CallAddress2;
+	nop;
+
+	; セパレータ２をくっつける
+	lea		r8, [rsp + 168h - 140h];
+	lea		rdx, [rsp + 168h - 100h];
+	lea		rcx, [rbp-18h];
+	call	dateProc1CallAddress3;
+	nop;
+
+	; 月をくっつける
+	lea     rdx, [rbp+28h];
+	mov		r8, rax;
+	lea		rcx, [rbp-38h];
+	call	dateProc1CallAddress3;
+	nop;
+
+	; セパレータ１をくっつける
+	lea     rdx, [rsp + 168h -120h];
+	mov     r8, rax;
+	lea		rcx, [rbp-58h];
+	call	dateProc1CallAddress3;
+	nop;
+
+	; 年をくっつける
+	lea		rdx, [rbp+8];
+	mov     r8, rax;
+	lea		rcx, [rbp-78h];
+	call	dateProc1CallAddress3;
+	nop;
+
+	push	dateProc1ReturnAddress;
+	ret;
+dateProc1V1400 ENDP
+
+;----------------------------------------------;
+
 dateProc2 PROC
 	; セパレータ１作成
 	lea		ebx, [rax+1];
