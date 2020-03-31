@@ -19,7 +19,7 @@ jobs:
         nuget-version: '4.4.1'
 
     - name: Restore nuget db
-      run: nuget restore **\*.sln
+      run: nuget restore IRJPS.sln
 
     - name: Setup MSBuild.exe
       uses: warrenbuckley/Setup-MSBuild@v1
