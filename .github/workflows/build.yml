@@ -28,3 +28,26 @@ jobs:
       run: msbuild IRJPS.sln -p:Configuration=release -p:platform=x64
       shell: cmd
 
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.run_number }}
+        release_name: Release ${{ github.run_number }}
+        body: |
+          new dll release!
+        draft: true
+        prerelease: true
+
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path: x64/Release/Plugin64.dll
+        asset_name: 1_4_dll.dll
+        asset_content_type: application/json
