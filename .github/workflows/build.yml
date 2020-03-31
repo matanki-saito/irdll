@@ -27,6 +27,27 @@ jobs:
     - name: Build source
       run: msbuild IRJPS.sln -p:Configuration=release -p:platform=x64
       shell: cmd
+    
+    - name: Make artifact package
+      run: |
+        New-Item artifact -ItemType Directory
+        New-Item artifact/plugins -ItemType Directory
+      shell: powershell
+
+    - name: Move files to artifact package
+      run: |
+        Move-Item README.md artifact/
+        Move-Item .dist.v1.json artifact/
+        Move-Item x64/Release/version.dll artifact/
+        Move-Item resource/plugin.ini artifact/plugins/
+        Move-Item resource/dllautoupdater.exe artifact/plugins/
+        Move-Item resource/autoupdate64.bat artifact/plugins/
+      shell: powershell
+
+    - name: generate artifact zip
+      run: |
+        compress-archive -Path artifact/ -DestinationPath alpha_steam_IR_1.4_fixdll_build_${{ github.run_number }}.zip
+      shell: powershell
 
     - name: Create Release
       id: create_release
@@ -48,6 +69,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: x64/Release/Plugin64.dll
-        asset_name: 1_4_dll.dll
+        asset_path: ./alpha_steam_IR_1.4_fixdll_build_${{ github.run_number }}.zip
+        asset_name: alpha_steam_IR_1.4_fixdll_build_${{ github.run_number }}.zip
         asset_content_type: application/json
