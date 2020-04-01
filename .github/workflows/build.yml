@@ -47,7 +47,7 @@ jobs:
 
     - name: generate artifact zip
       run: |
-        compress-archive -Path artifact/ -DestinationPath alpha_steam_IR_1.4_fixdll_build_${{ github.run_number }}.zip
+        compress-archive -Path artifact/* -DestinationPath alpha_steam_IR_1.4_fixdll_build_${{ github.run_number }}.zip
       shell: powershell
 
     - name: Create Release
