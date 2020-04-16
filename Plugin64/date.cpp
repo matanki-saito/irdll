@@ -27,6 +27,7 @@ namespace Date {
 		switch (options.version) {
 		case v1_4_0_0:
 		case v1_4_1_0:
+		case v1_4_2_0:
 			// lea     ebx, [rax+1]
 			BytePattern::temp_instance().find_pattern("8D 58 01 8B D6 48 8D 4D 08");
 			if (BytePattern::temp_instance().has_size(1, "日付表記を変更")) {
@@ -96,6 +97,7 @@ namespace Date {
 		case v1_3_2_0:
 		case v1_4_0_0:
 		case v1_4_1_0:
+		case v1_4_2_0:
 			// lea     rdx, [rsp+128h+var_E0]
 			BytePattern::temp_instance().find_pattern("48 8D 54 24 48 48 8B CE E8 ? ? ? ? 90 49 83 C9 FF");
 			if (BytePattern::temp_instance().has_size(2, "西暦日付表記を変更")) {
@@ -121,6 +123,7 @@ namespace Date {
 		case v1_3_2_0:
 		case v1_4_0_0:
 		case v1_4_1_0:
+		case v1_4_2_0:
 			// lea     ebx, [rax+1]
 			BytePattern::temp_instance().find_pattern("8D 58 01 48 C7 45 A0 0F 00 00 00");
 			if (BytePattern::temp_instance().has_size(1, "西暦日付表記を変更")) {

@@ -5,7 +5,8 @@ enum IrVersion {
 	UNKNOWN = 0,
 	v1_3_2_0 = 1032,
 	v1_4_0_0 = 1040,
-	v1_4_1_0 = 1041
+	v1_4_1_0 = 1041,
+	v1_4_2_0 = 1042
 };
 
 typedef UINT64 DllErrorCode;
