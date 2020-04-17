@@ -86,7 +86,7 @@ dateProc1 ENDP
 dateProc1V1400 PROC
 	; セパレータ１作成
 	mov     qword ptr [rsp + 168h -108h], 0Fh
-	mov		qword ptr [rsp + 168h -110h], r15;
+	mov		qword ptr [rsp + 168h -110h], r14;
 	mov		byte ptr [rsp + 168h - 120h], 0;
 	mov		r8d, 3;
 	mov     rdx, dateProc1Separator1; 年
@@ -96,7 +96,7 @@ dateProc1V1400 PROC
 
 	; セパレータ２作成
 	mov		qword ptr [rsp + 168h -128h], 0Fh;
-	mov     qword ptr [rsp + 168h -130h], r15;
+	mov     qword ptr [rsp + 168h -130h], r14;
 	mov		byte ptr [rsp + 168h -140h], 0;
 	mov		r8d, 3;
 	mov     rdx, dateProc1Separator2;
