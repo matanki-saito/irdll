@@ -12,22 +12,22 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 
 		DllError e = {};
 
-		// mod download
-		#ifndef _DEBUG
-		e |= ModDownload::Init();
-		#endif
-
 		// 設定
 		RunOptions options;
 
 		// Version取得
 		Version::GetVersionFromExe(&options);
 
+		// INIから取得
+		Ini::GetOptionsFromIni(&options);
+
 		// Versionチェック
 		if (Validator::ValidateVersion(e, options)) {
 
-			// INIから取得
-			Ini::GetOptionsFromIni(&options);
+			// mod download
+			#ifndef _DEBUG
+			e |= ModDownload::Init();
+			#endif
 
 			// 日付
 			e |= Date::Init(options);

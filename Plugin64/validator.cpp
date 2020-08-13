@@ -73,7 +73,7 @@ namespace Validator {
 			}
 		}
 		else {
-			BytePattern::LoggingInfo("DLL [OK]");
+			BytePattern::LoggingInfo("DLL [MATCH VERSION]");
 			return true;
 		}
 	}
