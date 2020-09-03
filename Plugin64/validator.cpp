@@ -49,7 +49,7 @@ namespace Validator {
 			case MAKELANGID(LANG_JAPANESE, SUBLANG_JAPANESE_JAPAN):
 				caption = L"未対応バージョン";
 				message = L""
-					L"日付変更dllはこのバージョンに未対応です。起動を優先しますか？";
+					L"日本語化dllはこのバージョンに未対応です。起動を優先しますか？";
 				break;
 
 			case MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US):

@@ -102,6 +102,9 @@ namespace Version {
 			case 1052:
 				version = v1_5_2_0;
 				break;
+			case 1053:
+				version = v1_5_2_0;
+				break;
 			default:
 				version = UNKNOWN;
 				break;
