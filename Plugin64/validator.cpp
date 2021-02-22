@@ -20,8 +20,8 @@ namespace Validator {
 			default:
 				caption = L"ERROR";
 				message = L""
-					L"Multibyte DLL hasn't supported this game version yet.\n"
-					L"It will be updated automatically, when I publish new one.\n"
+					L"Date format fix DLL hasn't supported this game version yet.\n"
+					L"It will be updated automatically, when new one is published.\n"
 					L"\n"
 					L"DLL announce page:\n"
 					L"https://github.com/matanki-saito/irdll";
@@ -49,14 +49,14 @@ namespace Validator {
 			case MAKELANGID(LANG_JAPANESE, SUBLANG_JAPANESE_JAPAN):
 				caption = L"未対応バージョン";
 				message = L""
-					L"日本語化dllはこのバージョンに未対応です。起動を優先しますか？";
+					L"日付変更dllはこのバージョンに未対応です。起動を優先しますか？";
 				break;
 
 			case MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US):
 			default:
 				caption = L"NO SUPPORT VERSION";
 				message = L""
-					L"Multibyte DLL hasn't supported this game version yet.\n"
+					L"Date format fix DLL hasn't supported this game version yet.\n"
 					L"Do you want to start a game?";
 					break;
 			}
