@@ -31,6 +31,8 @@ namespace Version {
 			return "v1_5_0_0";
 		case v1_5_2_0:
 			return "v1_5_2_0";
+		case v2_0_4_0:
+			return "v2_0_4_0";
 		default:
 			return "UNKNOWN";
 		}
@@ -93,9 +95,12 @@ namespace Version {
 		BytePattern::temp_instance().find_pattern("72 65 6C 65 61 73 65 2F ? 2E ? 2E ? 00");
 		if (BytePattern::temp_instance().count() > 0) {
 			// ?を取得する
-			Pattern minor = Injector::ReadMemory<Pattern>(BytePattern::temp_instance().get_first().address(8), true);
+			Pattern ver = Injector::ReadMemory<Pattern>(BytePattern::temp_instance().get_first().address(8), true);
 
-			switch (minor.calVer()) {
+			switch (ver.calVer()) {
+			case 2003: // 内部的には2.0.4も2.0.3扱い
+				version = v2_0_4_0;
+				break;
 			case 1050:
 				version = v1_5_0_0;
 				break;

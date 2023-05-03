@@ -25,6 +25,9 @@ namespace Date {
 		DllError e = {};
 
 		switch (options.version) {
+		case v2_0_4_0:
+			break;
+
 		case v1_4_0_0:
 		case v1_4_1_0:
 		case v1_4_2_0:
@@ -97,6 +100,8 @@ namespace Date {
 		int match_count = 2;
 
 		switch (options.version) {
+		case v2_0_4_0:
+			break;
 		case v1_5_2_0:
 		case v1_5_0_0:
 			match_count = 1;
@@ -126,6 +131,8 @@ namespace Date {
 		}
 
 		switch (options.version) {
+		case v2_0_4_0:
+			break;
 		case v1_3_2_0:
 		case v1_4_0_0:
 		case v1_4_1_0:
